@@ -1,32 +1,27 @@
-import { Categoria } from 'src/categorias/entities/categoria.entity';
-import {
-  Column,
-  DeleteDateColumn,
-  Entity,
-  ManyToOne
-} from 'typeorm';
+
+import { Entity, Column, PrimaryGeneratedColumn, DeleteDateColumn } from 'typeorm';
+
 
 @Entity()
 export class Producto {
-  //@PrimaryGeneratedColumn()
-  @Column({ primary: true, generated: true })
+  @PrimaryGeneratedColumn() // ✅ Usa esto en vez de @Column({ primary: true, generated: true })
   id: number;
 
-  @Column({unique: true})
+  @Column({ unique: true }) 
   nombre: string;
 
-  @Column()
+  @Column('decimal', { precision: 10, scale: 2 }) // ✅ Asegura que el precio sea decimal
   precio: number;
 
-  @Column({nullable:true })
-  descripcion?: string;
+  @Column({type: 'text', nullable: true }) 
+  descripcion?: string | null; // ✅ Agregado null para evitar problemas con valores vacíos
 
-  @Column({nullable:true })
-  imagen?: string;
+  @Column({ type: 'text',nullable: true }) 
+  imagen?: string | null;
 
-  @DeleteDateColumn({nullable:true })
-  deletedAt?: Date;
+  @DeleteDateColumn({ nullable: true }) 
+  deletedAt?: Date | null;
 
-  @ManyToOne(()=> Categoria,(categoria)=> categoria.categoria)
-  categoria: Categoria
+  // @ManyToOne(() => Categoria, (categoria) => categoria.productos, { nullable: false }) 
+  // categoria: Categoria;
 }
