@@ -1,5 +1,7 @@
 
-import { Entity, Column, PrimaryGeneratedColumn, DeleteDateColumn } from 'typeorm';
+
+import { Categoria } from 'src/categorias/entities/categoria.entity';
+import { Entity, Column, PrimaryGeneratedColumn, DeleteDateColumn, ManyToOne, JoinColumn } from 'typeorm';
 
 
 @Entity()
@@ -22,6 +24,8 @@ export class Producto {
   @DeleteDateColumn({ nullable: true }) 
   deletedAt?: Date | null;
 
-  // @ManyToOne(() => Categoria, (categoria) => categoria.productos, { nullable: false }) 
-  // categoria: Categoria;
+   @ManyToOne(() => Categoria, (categoria) => categoria.producto, { onDelete:'CASCADE', onUpdate: 'CASCADE', nullable: false }) 
+   
+   @JoinColumn({name: 'Categoria'})
+   categoria: Categoria;
 }

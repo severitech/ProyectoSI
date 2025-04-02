@@ -35,7 +35,7 @@ export class ProductosService {
     }
   }
   async findAll() {
-    return await this.productoRepository.find();
+    return await this.productoRepository.createQueryBuilder('producto').leftJoinAndSelect('producto.categoria', 'categoria').getMany();
   }
 
   async findOne(id: number) {

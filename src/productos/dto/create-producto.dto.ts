@@ -5,6 +5,7 @@ import {
   IsString,
   MinLength,
 } from 'class-validator';
+import { Categoria } from 'src/categorias/entities/categoria.entity';
 
 export class CreateProductoDto {
   @IsString()
@@ -22,4 +23,6 @@ export class CreateProductoDto {
   @IsOptional()
   @IsString()
   imagen: string;
+  @IsString()
+  categoria: Categoria
 }
