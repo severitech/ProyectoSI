@@ -17,7 +17,7 @@ export class UsersService {
   }
 
   async findOneByUser(usuario: string) {
-    console.log(usuario);
+   
     return await this.userRepository.findOne({ where: { usuario } });
   }
 

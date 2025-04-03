@@ -6,7 +6,6 @@ import { LoginDto } from './dto/login.dto';
 import { JwtService } from '@nestjs/jwt';
 @Injectable() // Asegúrate de que AuthService tenga este decorador
 export class AuthService {
-
   constructor(
     private readonly userService: UsersService,
 
@@ -25,7 +24,7 @@ export class AuthService {
       password: await bcryptjs.hash(password, 10),
     });
   }
-  
+
   async login({ usuario, password }: LoginDto) {
     const existeusuario = await this.userService.findOneByUser(usuario);
     if (!existeusuario) {
@@ -38,10 +37,15 @@ export class AuthService {
     if (!passwordcorrecta) {
       throw new NotFoundException('Contraseña Incorrecta');
     }
-    const payload = { usuario: usuario };
+    const payload = { usuario: existeusuario.usuario, role: existeusuario.role };
 
     const token = await this.jwtService.signAsync(payload);
 
     return { token, usuario };
+  }
+
+  async profile ({usuario,role}: {usuario: string, role:string}){
+    
+    return await this.userService.findOneByUser(usuario)
   }
 }
