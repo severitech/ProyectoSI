@@ -3,8 +3,10 @@ import { AuthService } from './auth.service';
 import { RegistrerDto } from './dto/registre.dto';
 import { LoginDto } from './dto/login.dto';
 import { Request } from 'express';
-import { Role } from './enum/rol.enum';
+import { Role } from '../common/enum/rol.enum';
 import { Auth } from './decorators/auth.decorator';
+import { ActiveUser } from 'src/common/decorators/active-user.decorator';
+import { UserActiveInterface } from 'src/common/interface/user-active.interface';
 
 interface requestWithUser extends Request {
   user: {
@@ -33,11 +35,11 @@ export class AuthController {
   }
 
   @Get('profile')
-  @Auth(Role.ADMIN)
-  profile(@Req() req: Request & requestWithUser) {
+  @Auth(Role.USER)
+  profile(@ActiveUser() user: UserActiveInterface) {
     return this.authService.profile({
-      usuario: req.user.usuario,
-      role: req.user.rol,
+      usuario: user.usuario,
+      role: user.role,
     });
   }
 

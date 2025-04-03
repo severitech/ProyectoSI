@@ -4,13 +4,14 @@ import { RegistrerDto } from './dto/registre.dto';
 import * as bcryptjs from 'bcryptjs';
 import { LoginDto } from './dto/login.dto';
 import { JwtService } from '@nestjs/jwt';
+import { Role } from 'src/common/enum/rol.enum';
 @Injectable() // Asegúrate de que AuthService tenga este decorador
 export class AuthService {
   constructor(
     private readonly userService: UsersService,
 
     private readonly jwtService: JwtService,
-  ) {}
+  ) { }
 
   async registrer({ nombre, usuario, password }: RegistrerDto) {
     const user = await this.userService.findOneByUser(usuario);
@@ -37,6 +38,9 @@ export class AuthService {
     );
     if (!passwordcorrecta) {
       throw new NotFoundException('Contraseña Incorrecta');
+    }
+    if (!existeusuario.activo) {
+      throw new NotFoundException('Usuario no activo');
     }
     const payload = {
       usuario: existeusuario.usuario,
