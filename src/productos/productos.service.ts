@@ -35,9 +35,12 @@ export class ProductosService {
     }
   }
   async findAll() {
-    return await this.productoRepository.createQueryBuilder('producto').leftJoinAndSelect('producto.categoria', 'categoria').getMany();
+    return await this.productoRepository.createQueryBuilder('producto')
+      .leftJoinAndSelect('producto.categoria', 'categoria')  // Realiza el JOIN con la tabla 'categoria'
+      .addSelect(['categoria.categoria'])  // Selecciona solo el campo 'categoria' de la entidad 'Categoria'
+      .getMany();
   }
-
+  
   async findOne(id: number) {
     return await this.productoRepository.findOneBy({ id });
   }

@@ -1,5 +1,6 @@
 import {
   IsInt,
+  IsNotEmpty,
   IsOptional,
   IsPositive,
   IsString,
@@ -24,5 +25,6 @@ export class CreateProductoDto {
   @IsString()
   imagen: string;
   @IsString()
+  @IsNotEmpty()
   categoria: Categoria
 }

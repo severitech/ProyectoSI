@@ -3,11 +3,12 @@ import { DeleteDateColumn, Entity, OneToMany, PrimaryColumn } from 'typeorm';
 
 @Entity()
 export class Categoria {
-  @PrimaryColumn({ type: 'varchar', length: 30 }) // ✅ Corrección: PrimaryColumn en lugar de Column
+  @PrimaryColumn({ type: 'varchar', length: 30 }) // ✅ PrimaryKey con tipo y longitud
   categoria: string;
 
-  @DeleteDateColumn({ nullable: true })
+  @DeleteDateColumn({ nullable: true }) // ✅ Campo para marca de tiempo de eliminación
   deletedAt?: Date | null;
-  @OneToMany(()=> Producto, (producto) => producto.categoria)
-  producto: Producto[]
+
+  @OneToMany(() => Producto, (producto) => producto.categoria)
+  producto: Producto[];
 }
