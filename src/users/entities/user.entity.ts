@@ -1,4 +1,4 @@
-import { Column, DeleteDateColumn, Entity } from 'typeorm';
+import { Column, Entity } from 'typeorm';
 
 @Entity()
 export class User {
@@ -8,12 +8,12 @@ export class User {
   @Column({ type: 'varchar', nullable: false, length: 50 })
   nombre: string;
 
-  @Column({ type: 'varchar', nullable: false, length: 255 })
+  @Column({ type: 'varchar', nullable: false, length: 255 , select: false})
   password: string;
 
   @Column({ default: 'user' })
   role: string;
 
-  @DeleteDateColumn()
-  deletedAt: Date;
+  @Column({default: true})
+  activo: boolean;
 }

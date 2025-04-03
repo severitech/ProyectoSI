@@ -16,13 +16,20 @@ export class UsersService {
     return this.userRepository.save(createUserDto);
   }
 
-  async findOneByUser(usuario: string) {
+  // async findOneByUser(usuario: string) {
    
-    return await this.userRepository.findOne({ where: { usuario } });
+  //   return await this.userRepository.findOne({ where: { usuario } });
+  // }
+
+  async findOneByUser(usuario: string) {
+    return await this.userRepository.findOne({
+      where: { usuario },
+      select: ['nombre', 'usuario','password', 'role', 'activo'],
+    });
   }
 
   findAll() {
-    return `This action returns all users`;
+    return this.userRepository.find()
   }
 
   findOne(id: number) {

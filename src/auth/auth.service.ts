@@ -30,6 +30,7 @@ export class AuthService {
     if (!existeusuario) {
       throw new NotFoundException('Usuario no es correcto');
     }
+
     const passwordcorrecta = await bcryptjs.compare(
       password,
       existeusuario.password,
@@ -37,15 +38,17 @@ export class AuthService {
     if (!passwordcorrecta) {
       throw new NotFoundException('Contraseña Incorrecta');
     }
-    const payload = { usuario: existeusuario.usuario, role: existeusuario.role };
+    const payload = {
+      usuario: existeusuario.usuario,
+      role: existeusuario.role,
+    };
 
     const token = await this.jwtService.signAsync(payload);
 
     return { token, usuario };
   }
 
-  async profile ({usuario,role}: {usuario: string, role:string}){
-    
-    return await this.userService.findOneByUser(usuario)
+  async profile({ usuario, role }: { usuario: string; role: string }) {
+    return await this.userService.findOneByUser(usuario);
   }
 }
