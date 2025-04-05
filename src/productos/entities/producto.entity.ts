@@ -1,30 +1,36 @@
-
-
 import { Categoria } from 'src/categorias/entities/categoria.entity';
-import { Entity, Column, PrimaryGeneratedColumn, DeleteDateColumn, ManyToOne } from 'typeorm';
-
-
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, UpdateDateColumn, CreateDateColumn } from 'typeorm';
 
 @Entity()
 export class Producto {
-  @PrimaryGeneratedColumn() //  Genera el ID automáticamente
+  @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ unique: true }) 
+  @Column({ length: 8 })
+  codigo: string;
+
+  @Column({ length: 50 })
   nombre: string;
 
-  @Column('decimal', { precision: 10, scale: 2 }) //  Precio como decimal
+  @Column({ length: 255 })
+  imagen: string;
+
+  @Column()
+  cantidad: number;
+
+  @Column('float')
   precio: number;
 
-  @Column({ type: 'text', nullable: true })
-  descripcion?: string | null; //  Puede ser nulo
+  @Column({ length: 30, nullable: true })
+  estado: string;
 
-  @Column({ type: 'text', nullable: true }) 
-  imagen?: string | null; //  Puede ser nulo
+  @ManyToOne(() => Categoria, categoria => categoria.categoria)
+  @JoinColumn({ name: 'categoria' })
+  categoria: Categoria;
 
-  @DeleteDateColumn({ nullable: true }) 
-  deletedAt?: Date | null;
+  @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  createdAt: Date;
 
-  @ManyToOne(() => Categoria, (categoria) => categoria.producto, { onDelete: 'CASCADE', onUpdate: 'CASCADE', nullable: false })
-  categoria: Categoria;  // Tipo de relación ManyToOne
+  @UpdateDateColumn({ type: 'timestamp', nullable: true })
+  updatedAt: Date;
 }

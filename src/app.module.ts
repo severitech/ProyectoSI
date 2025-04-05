@@ -6,24 +6,29 @@ import { Producto } from './productos/entities/producto.entity';
 import { Categoria } from './categorias/entities/categoria.entity';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module'
+import { ClienteModule } from './cliente/cliente.module';
+import { VentaModule } from './venta/venta.module';
+
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: 'localhost',
-      port: 3307,
-      username: 'user_crud',
+      port: 3306,
+      username: 'root',
       password: 'root',
-      database: 'db_crud',
+      database: 'TIENDA_SI1',
       autoLoadEntities: true,
-      synchronize: true,
+      synchronize: false,
       entities: [Producto, Categoria],
     }),
     ProductosModule,
     CategoriasModule,
     UsersModule,
     AuthModule,
+    ClienteModule,
+    VentaModule,
   ],
   controllers: [],
 })

@@ -1,14 +1,11 @@
 import { Producto } from 'src/productos/entities/producto.entity';
-import { DeleteDateColumn, Entity, OneToMany, PrimaryColumn } from 'typeorm';
+import { Column, Entity, PrimaryColumn } from 'typeorm';
 
 @Entity()
 export class Categoria {
-  @PrimaryColumn({ type: 'varchar', length: 30 }) // ✅ PrimaryKey con tipo y longitud
+  @PrimaryColumn()
   categoria: string;
 
-  @DeleteDateColumn({ nullable: true }) // ✅ Campo para marca de tiempo de eliminación
-  deletedAt?: Date | null;
-
-  @OneToMany(() => Producto, (producto) => producto.categoria)
-  producto: Producto[];
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  createdAt: Date;
 }

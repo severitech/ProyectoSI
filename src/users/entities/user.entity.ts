@@ -1,20 +1,25 @@
 import { Role } from 'src/common/enum/rol.enum';
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, PrimaryColumn } from 'typeorm';
 
 @Entity()
 export class User {
-  @Column({ primary: true, nullable: false, length: 50 , unique: true})
+  @PrimaryColumn({ type: 'varchar', length: 50 })
   usuario: string;
 
-  @Column({ type: 'varchar', nullable: false, length: 50 })
+  @Column({ type: 'varchar', length: 255, nullable: false })
   nombre: string;
 
-  @Column({ type: 'varchar', nullable: false, length: 255 , select: false})
+  @Column({ type: 'varchar', length: 255, select: false, nullable: false })
   password: string;
 
-  @Column({ default: Role.USER, enum: Role, type: 'enum', nullable: false })
-  role: string;
+  @Column({ 
+    type: 'enum', 
+    enum: Role, 
+    default: Role.USER,  // Usa el valor por defecto del enum 'USER' 
+    nullable: false 
+  })
+  role: Role;
 
-  @Column({default: true})
+  @Column({ default: true })
   activo: boolean;
 }

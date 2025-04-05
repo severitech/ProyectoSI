@@ -9,6 +9,10 @@ import {
 import { Categoria } from 'src/categorias/entities/categoria.entity';
 
 export class CreateProductoDto {
+  
+  @IsString()
+  @MinLength(3)
+  codigo: string;
   @IsString()
   @MinLength(3)
   nombre: string;
@@ -16,10 +20,6 @@ export class CreateProductoDto {
   @IsInt()
   @IsPositive()
   precio: number;
-
-  @IsOptional()
-  @IsString()
-  descripcion?: string;
 
   @IsOptional()
   @IsString()
