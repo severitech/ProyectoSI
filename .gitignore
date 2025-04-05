@@ -4,6 +4,7 @@
 /build
 mysql
 .vscode
+.env
 # Logs
 logs
 *.log
