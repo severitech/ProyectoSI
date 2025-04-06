@@ -3,10 +3,10 @@ import { Transform } from 'class-transformer';
 export class LoginDto {
   @IsString()
   @Transform(({ value }) => value.trim())
-  @MinLength(5)
+  @MinLength(4)
   usuario: string;
   @IsString()
   @Transform(({ value }) => value.trim())
-  @MinLength(5)
+  @MinLength(4)
   password: string;
 }
