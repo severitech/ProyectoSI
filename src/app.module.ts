@@ -14,17 +14,22 @@ import { StripeController } from './stripe/stripe.controller';
 import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [
+  imports:
+    [
+      ConfigModule.forRoot({
+        isGlobal: true,
+      }),
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: 'localhost',
       port: 3306,
       username: 'root',
-      password: '',
+      password: 'root',
       database: 'TIENDA_SI1',
       autoLoadEntities: true,
       synchronize: false,
       entities: [Producto, Categoria],
+
     }),
     ProductosModule,
     CategoriasModule,
@@ -38,4 +43,4 @@ import { ConfigModule } from '@nestjs/config';
   controllers: [StripeController],
   providers: [StripeService],
 })
-export class AppModule {}
+export class AppModule { }

@@ -28,6 +28,6 @@ export class ClienteService {
   }
 
   async remove(id: number) {
-    return await this.clienteRepository.softDelete(id)
+    return await this.clienteRepository.delete(id)
   }
 }
