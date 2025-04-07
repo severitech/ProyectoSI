@@ -1,15 +1,11 @@
 import { Module } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { UsersController } from './users.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 
 @Module({
-  //con esta linea se actualiza en la base de datos
-  imports: [ TypeOrmModule.forFeature([User])],
-  
-  controllers: [UsersController],
+  imports: [TypeOrmModule.forFeature([User])],
   providers: [UsersService],
-  exports: [UsersService]
+  exports: [UsersService], // Exporta específicamente el servicio `UsersService`
 })
 export class UsersModule {}

@@ -1,13 +1,15 @@
 import { Cliente } from "src/cliente/entities/cliente.entity";
 import { User } from "src/users/entities/user.entity";
-import { Column, Entity, JoinColumn, ManyToOne, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity()
 export class Venta {
-    @Column({ primary: true, generated: true, nullable: false })
+    @PrimaryGeneratedColumn()
     nro: number;
-    @Column({ default: Date.now(), nullable: false })
+
+    @CreateDateColumn({ type: 'timestamp' })
     fecha: Date;
+
     @Column({ nullable: false })
     total: number;
     @Column({ type: 'varchar', length: 20, nullable: false })
@@ -15,10 +17,13 @@ export class Venta {
     @UpdateDateColumn({ type: 'timestamp', nullable: true })
     updatedAt: Date;
 
-    @ManyToOne(() => Cliente, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
-    @JoinColumn({ name: 'cliente' })
+    @ManyToOne(() => Cliente, (cliente) => cliente.ventas, { eager: true })
+    @JoinColumn({ name: 'CLIENTE' }) // Define explícitamente el nombre de la columna
     cliente: Cliente;
-    @ManyToOne(() => User, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
-    @JoinColumn({ name: 'usuario' })
+
+    @ManyToOne(() => User, (user) => user.ventas, { eager: true })
+    @JoinColumn({ name: 'USUARIO' }) // Define explícitamente el nombre de la columna
     usuario: User;
+
+
 }

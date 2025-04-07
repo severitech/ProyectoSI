@@ -16,34 +16,26 @@ export class VentaService {
   ) { }
 
   async create(createVentaDto: CreateVentaDto) {
-    // Paso 1: Obtener el cliente completo usando el ID
-    const cliente = await this.clienteRepository.findOne({
-      where: { id: createVentaDto.cliente.id },
+    const cliente = await this.clienteRepository.findOne({ where: { id: createVentaDto.cliente } });
+    if (!cliente) {
+      throw new Error('Cliente no encontrado');
+    }
+  
+    const usuario = await this.usuarioRepository.findOne({ where: { usuario: createVentaDto.usuario } });
+    if (!usuario) {
+      throw new Error('Usuario no encontrado');
+    }
+  
+    const venta = this.ventaRepository.create({
+      ...createVentaDto,
+      cliente: cliente,
+      usuario: usuario,
+      estado: createVentaDto.estado || 'pendiente',
     });
-    
-    
-      if (!cliente) {
-        throw new Error('Cliente no encontrado');
-      }
-    
-      // Paso 2: Crear la venta, asignando el objeto cliente y resolviendo el usuario
-      const usuario = await this.usuarioRepository.findOne({
-        where: { usuario: createVentaDto.usuario.usuario },
-      });
-  
-      if (!usuario) {
-        throw new Error('Usuario no encontrado');
-      }
-  
-      const venta = this.ventaRepository.create({
-        ...createVentaDto,
-        cliente: cliente, // Asignar el objeto cliente completo
-        usuario: usuario, // Asignar el objeto usuario completo
-      });
-      console.log(venta);
-    // Paso 3: Guardar la venta
-    // return await this.ventaRepository.save(venta);
+    //console.log(venta);
+    return await this.ventaRepository.save(venta);
   }
+  
 
 
   async findAll() {
