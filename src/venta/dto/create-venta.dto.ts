@@ -1,7 +1,5 @@
 import { Transform } from 'class-transformer';
-import { IsDate, IsNumber, IsObject, IsString } from 'class-validator';
-import { Cliente } from 'src/cliente/entities/cliente.entity';
-import { User } from 'src/users/entities/user.entity';
+import { IsDate, IsNumber, IsString } from 'class-validator';
 
 export class CreateVentaDto {
   @IsDate() // Validación para un objeto de tipo Date

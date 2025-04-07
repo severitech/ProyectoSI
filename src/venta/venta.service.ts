@@ -57,8 +57,26 @@ export class VentaService {
     return await this.ventaRepository.findOneBy({ nro })
   }
 
-  update(id: number, updateVentaDto: UpdateVentaDto) {
-    return `This action updates a #${id} venta`;
+  async update(id: number, updateVentaDto: UpdateVentaDto) {
+    const partialUpdate: any = { ...updateVentaDto };
+
+    if (updateVentaDto.cliente) {
+      const cliente = await this.clienteRepository.findOne({ where: { id: updateVentaDto.cliente } });
+      if (!cliente) {
+        throw new Error('Cliente no encontrado');
+      }
+      partialUpdate.cliente = cliente;
+    }
+
+    if (updateVentaDto.usuario) {
+      const usuario = await this.usuarioRepository.findOne({ where: { usuario: updateVentaDto.usuario } });
+      if (!usuario) {
+        throw new Error('Usuario no encontrado');
+      }
+      partialUpdate.usuario = usuario;
+    }
+
+    return this.ventaRepository.update(id, partialUpdate);
   }
 
   remove(id: number) {

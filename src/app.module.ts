@@ -12,6 +12,7 @@ import { StripeService } from './stripe/stripe.service';
 import { StripeModule } from './stripe/stripe.module';
 import { StripeController } from './stripe/stripe.controller';
 import { ConfigModule } from '@nestjs/config';
+import { DetalleVentaModule } from './detalle_venta/detalle_venta.module';
 
 @Module({
   imports:
@@ -39,6 +40,7 @@ import { ConfigModule } from '@nestjs/config';
     VentaModule,
     StripeModule,
     ConfigModule.forRoot(),
+    DetalleVentaModule,
   ],
   controllers: [StripeController],
   providers: [StripeService],

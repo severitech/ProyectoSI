@@ -1,5 +1,6 @@
 import { Categoria } from 'src/categorias/entities/categoria.entity';
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, UpdateDateColumn, CreateDateColumn } from 'typeorm';
+import { DetalleVenta } from 'src/detalle_venta/entities/detalle_venta.entity';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, UpdateDateColumn, CreateDateColumn, OneToMany } from 'typeorm';
 
 @Entity()
 export class Producto {
@@ -33,4 +34,8 @@ export class Producto {
 
   @UpdateDateColumn({ type: 'timestamp', nullable: true })
   updatedAt: Date;
+
+  @OneToMany(() => DetalleVenta, (detalleVenta) => detalleVenta.producto, { eager: true })
+  @JoinColumn({ name: 'DETALLE_VENTA' })
+  detalle_venta: DetalleVenta[]; // Define explícitamente el nombre de la columna
 }
