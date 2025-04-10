@@ -27,7 +27,7 @@ export class Venta {
     @JoinColumn({ name: 'USUARIO' }) // Define explícitamente el nombre de la columna
     usuario: User;
 
-    @OneToMany(() => DetalleVenta, (detalleVenta) => detalleVenta.venta, { eager: true })
+    @OneToMany(() => DetalleVenta, (detalleVenta) => detalleVenta.venta, )
     @JoinColumn({ name: 'DETALLE_VENTA' })
     detalle_venta: DetalleVenta[] // Define explícitamente el nombre de la columna
 }

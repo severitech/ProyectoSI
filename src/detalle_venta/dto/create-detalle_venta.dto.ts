@@ -1,13 +1,15 @@
-import { IsString } from "class-validator";
+import { Type } from "class-transformer";
+import { IsDecimal, IsIn, IsInt, isInt, IsNumber, IsString } from "class-validator";
 
 export class CreateDetalleVentaDto {
-    @IsString()
+    @IsInt()
     venta: number
-    @IsString()
+    @IsInt()
     producto: number;
 
-    @IsString()
-    cantidad: number;
-    @IsString()
+    @IsInt()
+    cantidad: number; 
+    @Type(() => Number)
+    @IsNumber({}, { message: 'subtotal debe ser un número decimal válido' })
     subtotal: number;
 }

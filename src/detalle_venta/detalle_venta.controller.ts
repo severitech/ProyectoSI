@@ -17,9 +17,9 @@ export class DetalleVentaController {
     return this.detalleVentaService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.detalleVentaService.findOne(+id);
+  @Get(':venta')
+  findOne(@Param('venta') venta: number) {
+    return this.detalleVentaService.findByVenta(venta);
   }
 
   @Patch(':id')
